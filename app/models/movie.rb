@@ -44,6 +44,12 @@ class Movie < ActiveRecord::Base
     end
   end
 
+  def delete_all_reviews
+    self.reviews.each do |review|
+      review.destroy
+    end
+  end
+
   def self.by_rating
     order(rating: :desc)
   end
