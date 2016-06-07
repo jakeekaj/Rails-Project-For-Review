@@ -11,8 +11,9 @@ class ReviewsController < ApplicationController
     @movie = Movie.find(params[:movie_id])
     @review = @movie.reviews.create(review_params)
     @movie.update_rating(@review.rating)
-    @movie.save
+
     if @review.save
+      @movie.save
       redirect_to movie_path(@movie), notice: 'Review was successfully added.'
     else
       render :new, notice: 'Review was not added.'
@@ -50,6 +51,7 @@ class ReviewsController < ApplicationController
     @reviews =  current_user.reviews
     render :index
   end
+
 
 
   private

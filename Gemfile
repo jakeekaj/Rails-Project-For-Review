@@ -30,7 +30,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
  gem 'omniauth'
  gem 'omniauth-facebook'
  gem 'bootstrap-sass'
-
+ gem 'arel'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

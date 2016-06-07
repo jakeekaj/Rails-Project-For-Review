@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
+  get 'user/reviews' => 'reviews#user_reviews', as: :user_reviews
+  get 'movies/rating' => 'movies#rating'
+  get 'movies/unrated' => 'movies#unrated'
+  root 'movies#index'
   devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
   resources :movies do
     resources :reviews
   end
   resources :users
-  get 'user/reviews' => 'reviews#user_reviews', as: :user_reviews
-  root 'movies#index'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

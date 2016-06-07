@@ -6,6 +6,15 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
   end
+  # sort actions
+  def rating
+    @movies = Movie.rated.by_rating
+  end
+
+  def unrated
+    @movies = Movie.unrated
+  end
+
 
   # GET /movies/1
   # GET /movies/1.json
@@ -62,6 +71,9 @@ class MoviesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

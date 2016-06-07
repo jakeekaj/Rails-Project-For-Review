@@ -35,13 +35,26 @@ class Movie < ActiveRecord::Base
       count = self.reviews.size
       total = 0.0
       self.reviews.each do |review|
+      if review.rating.nil?
+      else
       total += review.rating
-      end
       self.rating = total / count.to_f
+      end
+     end
     end
   end
 
+  def self.by_rating
+    order(rating: :desc)
+  end
 
+  def self.rated
+    where("rating >= ?", 0)
+  end
+
+  def self.unrated
+    where(rating: nil)
+  end
 
 
 
