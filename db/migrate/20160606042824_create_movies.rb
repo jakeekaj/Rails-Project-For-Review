@@ -5,6 +5,7 @@ class CreateMovies < ActiveRecord::Migration
       t.integer :year
       t.text :synopsis
       t.float :rating, default: nil
+      t.integer :user_id
 
       t.timestamps null: false
     end

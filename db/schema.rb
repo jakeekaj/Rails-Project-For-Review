@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20160606091149) do
     t.integer  "year"
     t.text     "synopsis"
     t.float    "rating"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
