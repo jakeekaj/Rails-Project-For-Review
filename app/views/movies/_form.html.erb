@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+
   <div class="field">
     <%= f.label :title %><br>
     <%= f.text_field :title %>
@@ -23,6 +24,19 @@
     <%= f.label :synopsis %><br>
     <%= f.text_area :synopsis %>
   </div>
+  <div class="field">
+    <p><h3>You can also add a new review here!</h3></p>
+    <p><em><h4>Note: All fields required if submitting a review</h4></em></p>
+    <%= f.fields_for :reviews, @movie.reviews.build do |t| %>
+      <%= t.label :title %>
+      <%= t.text_field :title %><br>
+      <%= t.label :content %>
+      <%= t.text_area :content %><br>
+      <%= t.label :rating %>
+      <%= t.text_field :rating %>
+      <% end %>
+  </div>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
   <div class="actions">
     <%= f.submit %>
   </div>

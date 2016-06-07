@@ -10,7 +10,6 @@ class ReviewsController < ApplicationController
   def create
     @movie = Movie.find(params[:movie_id])
     @review = @movie.reviews.create(review_params)
-    @review.user_id = current_user.id
     @movie.update_rating(@review.rating)
     @movie.save
     if @review.save
@@ -61,7 +60,7 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:title, :content,:rating)
+    params.require(:review).permit(:title, :content,:rating, :user_id)
   end
 
 

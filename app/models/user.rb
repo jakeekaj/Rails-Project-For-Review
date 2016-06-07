@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,  :omniauthable, :omniauth_providers => [:facebook]
 
   has_many :reviews
+  has_many :movies, through: :reviews
   has_many :movies
 
   def self.from_omniauth(auth)

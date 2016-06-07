@@ -1,11 +1,18 @@
+<% if @reviews.count > 0%>
 <h1>Your Reviews</h1>
+
 
 <ul>
   <% @reviews.each do |review| %>
-    <li>review.title</li>
-    <li>review.rating</li>
-    <li><%= link_to 'Show', ([@movie,review]) %></li>
-    <li><%= link_to 'Edit', edit_movie_review_path(@movie,review) %></li>
-    <li><%= link_to 'Destroy', ([@movie,review]), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <h3>Review for <%= review.movie.title %></h3>
+    <li><%= review.title%></li>
+    <li><%= review.rating%></li>
+    <li><%= link_to 'Show', ([review.movie,review]) %></li>
+    <li><%= link_to 'Edit', edit_movie_review_path(review.movie,review) %></li>
+    <li><%= link_to 'Destroy', ([review.movie,review]), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <hr class="style1">
   <% end %>
 </ul>
+<% else %>
+  <h3>You have no reviews as of this time.</h3>
+<% end %>

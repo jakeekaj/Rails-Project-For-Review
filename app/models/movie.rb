@@ -9,7 +9,21 @@ class Movie < ActiveRecord::Base
       with: /(19|20)\d{2}/i,
       message: "should be a four-digit year"
     }
+    accepts_nested_attributes_for :reviews, reject_if: :all_blank
 
+
+
+  def reviews_attributes=(attributes)
+  if attributes["0"]["title"] == "" && attributes["0"]["content"] == "" && attributes["0"]["rating"] == ""
+  else
+    attributes.values.each do |attribute|
+      review = Review.find_or_create_by(attribute)
+      review.user_id = self.user_id
+      self.reviews << review
+      self.update_rating(review.rating)
+      end
+    end
+  end
 
   def update_rating(rating)
     if self.rating.nil?
@@ -24,7 +38,6 @@ class Movie < ActiveRecord::Base
       total += review.rating
       end
       self.rating = total / count.to_f
-
     end
   end
 
