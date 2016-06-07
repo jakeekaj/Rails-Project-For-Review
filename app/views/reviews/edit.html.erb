@@ -2,6 +2,6 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back to your Review', @review %> |
+<%= link_to 'Back to your Review', ([@movie, @review]) %> |
 <%= link_to 'Back to Movie page', @movie %>
 <%= link_to 'Back to Main Page - Movies List', movies_path %>
