@@ -54,6 +54,10 @@ class Movie < ActiveRecord::Base
     order(rating: :desc)
   end
 
+  def self.latest
+    order(year: :desc)
+  end
+
   def self.rated
     where("rating >= ?", 0)
   end

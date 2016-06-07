@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'user/reviews' => 'reviews#user_reviews', as: :user_reviews
   get 'movies/rating' => 'movies#rating'
   get 'movies/unrated' => 'movies#unrated'
+  get 'movies/latest' => 'movies#latest'
   root 'movies#index'
   devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
   resources :movies do

@@ -59,6 +59,6 @@
 <%= link_to 'Add a Review', new_movie_review_path(@movie) %> |
 <%= link_to 'Edit Movie', edit_movie_path(@movie) %> |
 <%= link_to 'Back', movies_path %>
-<% if current_user.id == movie.user_id %>
-| <%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% if current_user.id == @movie.user_id %>
+| <%= link_to 'Destroy', @movie, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
