@@ -6,15 +6,21 @@ class ReviewsController < ApplicationController
     @review = @movie.reviews.build
   end
 
+
   def create
     @movie = Movie.find(params[:movie_id])
     @review = @movie.reviews.create(review_params)
     @review.user_id = current_user.id
+    @movie.update_rating(@review.rating)
+    @movie.save
     if @review.save
       redirect_to movie_path(@movie), notice: 'Review was successfully added.'
     else
       render :new, notice: 'Review was not added.'
     end
+  end
+
+  def index
   end
 
   def edit
@@ -25,6 +31,8 @@ class ReviewsController < ApplicationController
 
   def update
     @review.update(review_params)
+    @movie.update_rating(@review.rating)
+    @movie.save
     if @review.save
       redirect_to movie_review_path(@movie, @review), notice: 'Review was successfully edited.'
     else
@@ -34,7 +42,14 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
+    @movie.update_rating(0)
+    @movie.save
     redirect_to @movie, notice: 'Review was successfully deleted.'
+  end
+
+  def user_reviews
+    @reviews =  current_user.reviews
+    render :index
   end
 
 

@@ -12,7 +12,7 @@
 
 <p>
   <strong>Reviewer's Rating:</strong>
-  <%= @review.rating %>
+  <%= number_with_precision(@review.rating, precision: 1)  %>
 </p>
 
 <%= link_to 'Back to Movie page', @movie %><br/>

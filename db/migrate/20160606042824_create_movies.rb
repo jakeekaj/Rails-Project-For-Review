@@ -4,7 +4,7 @@ class CreateMovies < ActiveRecord::Migration
       t.string :title
       t.integer :year
       t.text :synopsis
-      t.float :rating
+      t.float :rating, default: nil
 
       t.timestamps null: false
     end

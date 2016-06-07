@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :movies do
     resources :reviews
   end
+  resources :users
+  get 'user/reviews' => 'reviews#user_reviews', as: :user_reviews
   root 'movies#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

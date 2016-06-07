@@ -1,5 +1,15 @@
 <%= form_for([@movie, @review]) do |f| %>
-<p id="notice"><%= notice %></p>
+<% if @review.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@review.errors.count, "error") %> prohibited this movie from being saved:</h2>
+
+    <ul>
+    <% @review.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 
   <div class="field">
     <%= f.label :title %><br>

@@ -1,0 +1,11 @@
+<h1>Your Reviews</h1>
+
+<ul>
+  <% @reviews.each do |review| %>
+    <li>review.title</li>
+    <li>review.rating</li>
+    <li><%= link_to 'Show', ([@movie,review]) %></li>
+    <li><%= link_to 'Edit', edit_movie_review_path(@movie,review) %></li>
+    <li><%= link_to 'Destroy', ([@movie,review]), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+  <% end %>
+</ul>

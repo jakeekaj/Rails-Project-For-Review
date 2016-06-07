@@ -29,6 +29,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
  gem 'devise'
  gem 'omniauth'
  gem 'omniauth-facebook'
+ gem 'bootstrap-sass'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -55,5 +57,3 @@ group :production do
   gem "google-analytics-rails"
   gem "rails_12factor"
 end
-
-gem "bootstrap-sass", "~> 3.1.1"
