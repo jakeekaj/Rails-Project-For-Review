@@ -20,5 +20,33 @@
   <%= @movie.rating %>
 </p>
 
-<%= link_to 'Edit', edit_movie_path(@movie) %> |
+<p>
+  <strong>Reviews:</strong>
+  <table>
+    <thead>
+      <tr>
+        <th>Title of Review</th>
+        <th>Reviewer</th>
+        <th>Rating</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+  <tbody>
+    <% @movie.reviews.each do |review| %>
+      <tr>
+        <td><strong><%= review.title%></strong></td>
+        <td><%= review.user.email %></td>
+        <td><%= review.rating %></td>
+        <td><%= link_to 'Show', ([@movie,review]) %></td>
+        <% if current_user.id == review.user_id %>
+        <td><%= link_to 'Edit', edit_movie_review_path(@movie,review) %></td>
+        <td><%= link_to 'Destroy', ([@movie,review]), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Add a Review', new_movie_review_path(@movie) %>
+<%= link_to 'Edit Movie', edit_movie_path(@movie) %> |
 <%= link_to 'Back', movies_path %>
