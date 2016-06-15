@@ -5,6 +5,10 @@ class MoviesController < ApplicationController
   # GET /movies.json
   def index
     @movies = Movie.all
+   respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @movies, each_serializer: MovieSerializer }
+    end
   end
   # sort actions
   def rating
@@ -23,6 +27,10 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.json
   def show
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @movie, serializer: MovieSerializer }
+    end
 
   end
 

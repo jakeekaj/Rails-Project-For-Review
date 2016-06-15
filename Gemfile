@@ -31,6 +31,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
  gem 'omniauth-facebook'
  gem 'bootstrap-sass'
  gem 'arel'
+ gem 'active_model_serializers'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

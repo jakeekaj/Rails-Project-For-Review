@@ -27,6 +27,10 @@ class ReviewsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @review, serializer: ReviewSerializer }
+    end
   end
 
   def update

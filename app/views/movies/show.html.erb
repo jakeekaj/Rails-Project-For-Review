@@ -1,21 +1,22 @@
 <p id="notice"><%= notice %></p>
+<a href="#" class="js-next" data-id="<%=@movie.id%>">Next Movie>>></a>
 
-<p>
+<p class="movieTitle">
   <h3><strong>Title:</strong>
   <%= @movie.title %></h3>
 </p>
 
-<p>
+<p class="movieYear">
   <strong>Year:</strong>
   <%= @movie.year %>
 </p>
 
-<p>
+<p class="movieSynopsis">
   <strong>Synopsis:</strong>
   <%= @movie.synopsis %>
 </p>
 
-<p>
+<p class="movieRating">
   <strong>Rating:</strong>
   <% if @movie.rating.nil?  %>
   <em>Movie not yet reviewed</em>
@@ -24,12 +25,13 @@
   <% end %>
 </p>
 
-<p>
+<p class="movieUser">
   <strong>Last updated by:</strong>
   <em><%= @movie.user.email %></em>
 </p>
 
 <hr class="style1">
+<div id="reviewSection">
   <strong>Reviews:</strong>
   <table class="table table-hover">
     <thead>
@@ -58,7 +60,34 @@
 
 <%= link_to 'Add a Review', new_movie_review_path(@movie) %> |
 <%= link_to 'Edit Movie', edit_movie_path(@movie) %> |
-<%= link_to 'Back', movies_path %>
+
 <% if current_user.id == @movie.user_id %>
-| <%= link_to 'Destroy', @movie, method: :delete, data: { confirm: 'Are you sure?' } %>
+ <%= link_to 'Destroy', @movie, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
+</div>
+<br>
+
+<%= link_to 'Back', movies_path %>
+
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  $(".js-next").on("click", function(e) {
+    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+    $.get("/movies/" + nextId + ".json", function(data) {
+      $("h3").html('<h3><strong>Title:</strong> '+ data["title"] + '</h3>');
+      $(".movieYear").html('<strong>Year:</strong> '+ data["year"]);
+      $(".movieSynopsis").html('<strong>Synopsis:</strong> '+ data["synopsis"]);
+      $(".movieRating").html('<strong>Rating:</strong> '+ data["rating"]);
+      $(".movieUser").html('<strong>Added by:</strong> '+ data["user"]["email"]);
+      // re-set the id to current on the link
+      $(".js-next").attr("data-id", data["id"]);
+      //Hide irrelevant details
+      //$("#reviewSection.table").hide();
+
+
+    });
+    document.getElementById('reviewSection').style.display="none";
+  });
+});
+</script>
