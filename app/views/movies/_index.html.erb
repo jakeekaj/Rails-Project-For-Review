@@ -59,9 +59,8 @@ $(document).ready(function(){
       //grab the JSON response and parse to get the required data
     $.each(response, function(index,review){
         var html = "<tr style='color:red;'>";
-        html += "<td><strong>Review:</strong></td><td colspan='2'><em> " + review['title'] + "</em></td>"
+        html += "<td><strong>Review:</strong></td><td colspan='2'><em> " + review['title'] + "</em> &nbsp; &nbsp; ("+review['rating']+"/10)</td>"
         html += "<td><strong>Reviewer:</strong></td><td colspan='2'><em>" + review['user']['email'] + "</em></td></tr>"
-        html += "<tr style='color:red;'><td><strong>Rating:</strong></td><td>" + review['rating'] + "</td></tr>"
 
         $("a#showReviews-"+review['movie']['id']).hide();
         $("#movieDetails-"+review['movie']['id']).after(html);
