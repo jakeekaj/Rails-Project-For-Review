@@ -29,7 +29,7 @@
         <% end %>
         <td> <%= movie.reviews.size %> review(s) <br/>
           <% if movie.reviews.size > 0 %>
-          <a id='showReviews-<%=movie.id%>' href='/movies/<%= movie.id%>/reviews'>Show Reviews</a> <% end %> </td>
+          <a id='showReviews-<%=movie.id%>' class="showReviews" href='/movies/<%= movie.id%>/reviews'>Show Reviews</a> <% end %> </td>
         <td><%= link_to 'Show', movie %></td>
         <% if current_user.id == movie.user_id %>
         <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
@@ -48,7 +48,10 @@
 
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-  $('a').on("click", function(e){
+
+
+
+  $('a.showReviews').on("click", function(e){
     $.ajax({
       method: "GET",
       url: this.href
