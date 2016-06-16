@@ -76,12 +76,7 @@ $(document).ready(function(){
 
 
   $('a.showReviews').on("click", function(e){
-    $.ajax({
-      method: "GET",
-      url: this.href
-    }).success(function(response){
-
-  //  $.each(response, function(index,review){
+    $.get(this.href).success(function(response){
 
         var html = "<tr style='color:red;'>";
         html += "<td colspan='3'><em> " + response['content'] + "</em></td></tr>"
@@ -90,7 +85,6 @@ $(document).ready(function(){
         $("a#showReviews-"+response['id']).hide();
         $("#movieReviews-"+response['id']).after(html);
 
-  //    });
     });
     e.preventDefault();
   });
