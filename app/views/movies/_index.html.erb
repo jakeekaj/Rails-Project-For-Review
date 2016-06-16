@@ -4,6 +4,7 @@
 <%= link_to "Sort by rating (unrated not included)", movies_rating_url %> | <%= link_to "Show all unrated films", movies_unrated_url %>
 | <%= link_to "Sort by Year (latest first)", movies_latest_url %>
 <% if @movies.count > 0%>
+<%# Create a table for movie iteration %>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -29,6 +30,7 @@
         <% end %>
         <td> <%= movie.reviews.size %> review(s) <br/>
           <% if movie.reviews.size > 0 %>
+          <%# Create hyperlink to show movies through ajax call %>
           <a id='showReviews-<%=movie.id%>' class="showReviews" href='/movies/<%= movie.id%>/reviews'>Show Reviews</a> <% end %> </td>
         <td><%= link_to 'Show', movie %></td>
         <% if current_user.id == movie.user_id %>
@@ -50,12 +52,13 @@
 $(document).ready(function(){
 
 
-
+// activate listener to show reviews and put on the next row
   $('a.showReviews').on("click", function(e){
     $.ajax({
       method: "GET",
       url: this.href
     }).success(function(response){
+      //grab the JSON response and parse to get the required data
     $.each(response, function(index,review){
         var html = "<tr style='color:red;'>";
         html += "<td colspan='2'><strong>Review:</strong></td><td><em> " + review['title'] + "</em></td>"

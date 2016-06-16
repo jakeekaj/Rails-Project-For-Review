@@ -41,7 +41,7 @@ class ReviewsController < ApplicationController
     @movie.update_rating(@review.rating)
     @movie.save
     if @review.save
-      redirect_to movie_review_path(@movie, @review), notice: 'Review was successfully edited.'
+      redirect_to movie_path(@movie), notice: 'Review was successfully edited.'
     else
       render :edit, notice: 'Review was not edited.'
     end

@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-
 <p>
   <h3><strong>Title:</strong>
   <%= @movie.title %></h3>
@@ -44,11 +43,11 @@
     </thead>
   <tbody>
     <% @movie.reviews.each do |review| %>
-      <tr>
+      <tr id="movieReviews-<%=review.id%>">
         <td><strong><%= review.title%></strong></td>
         <td><%= review.user.email %></td>
         <td><%= number_with_precision(review.rating, precision: 1) %></td>
-        <td><%= link_to 'Show', ([@movie,review]) %></td>
+        <td><a id='showReviews-<%=review.id%>' class="showReviews" href='/movies/<%= @movie.id%>/reviews/<%=review.id%>.json'>Show Content</a> </td>
         <% if current_user.id == review.user_id %>
         <td><%= link_to 'Edit', edit_movie_review_path(@movie,review) %></td>
         <td><%= link_to 'Destroy', ([@movie,review]), method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -69,3 +68,31 @@
 <br>
 
 <%= link_to 'Back', movies_path %>
+
+
+<script type="text/javascript" charset="utf-8">
+
+$(document).ready(function(){
+
+
+  $('a.showReviews').on("click", function(e){
+    $.ajax({
+      method: "GET",
+      url: this.href
+    }).success(function(response){
+
+  //  $.each(response, function(index,review){
+
+        var html = "<tr style='color:red;'>";
+        html += "<td colspan='3'><em> " + response['content'] + "</em></td></tr>"
+
+
+        $("a#showReviews-"+response['id']).hide();
+        $("#movieReviews-"+response['id']).after(html);
+
+  //    });
+    });
+    e.preventDefault();
+  });
+});
+</script>
