@@ -29,6 +29,15 @@
   <em><%= @movie.user.email %></em>
 </p>
 
+<div id="quotesList">
+  <strong>Famous Quotes:</strong>
+  <ul>
+  <% @movie.quotes.each do |quote| %>
+    <li><em><%= quote.text %><em></li>
+  <% end %>
+  </ul>
+</div>
+<%# Iterate through all the movie reviews %>
 <hr class="style1">
 <div id="reviewSection">
   <strong>Reviews:</strong>
@@ -67,14 +76,80 @@
 </div>
 <br>
 
+
+<br>
+<%# Form for adding new quotes %>
+<p>
+  <strong>Contribute your favorite quotes:</strong>
+<%= form_for(@quote) do |f| %>
+<% if @quote.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@quote.errors.count, "error") %> prohibited this movie from being saved:</h2>
+
+    <ul>
+    <% @quote.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <div class="field">
+
+    <%= f.text_field :text %>
+  </div>
+
+
+  <%= f.hidden_field :movie_id, :value => @movie.id %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+</p>
 <%= link_to 'Back', movies_path %>
+
+
 
 
 <script type="text/javascript" charset="utf-8">
 
 $(document).ready(function(){
 
+//  To add new quotes to the movie via json response
+  $("#new_quote").on("submit", function(e){
 
+    url = this.action
+
+    data = {
+      'authenticity_token': $("input[name='authenticity_token']").val(),
+      'quote':{
+        'text': $("#quote_text").val(),
+        'movie_id': $("#quote_movie_id").val()
+      }
+    };
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: data,
+      success: function(response){
+        var html = "<li>"
+        html += response['text']
+        html += "</li>"
+        $('div#quotesList ul').append(html)
+        $('#quote_text').val("")
+      }
+    })
+
+
+
+    e.preventDefault();
+  })
+
+
+
+//  To reveal content of the reviews
   $('a.showReviews').on("click", function(e){
     $.get(this.href).success(function(response){
 

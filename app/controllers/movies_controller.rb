@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.json
   def show
-
+    @quote = Quote.new
     respond_to do |format|
       format.html { render :show }
       format.json { render json: @movie, serializer: MovieSerializer }

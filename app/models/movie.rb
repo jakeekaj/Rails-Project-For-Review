@@ -2,6 +2,7 @@ class Movie < ActiveRecord::Base
   belongs_to :user
   has_many :reviews
   has_many :users, through: :reviews
+  has_many :quotes
   validates :title, presence: true
   validates :synopsis, presence: true
   validates :year, presence: true, inclusion: { in: 1900..Date.today.year },
