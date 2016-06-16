@@ -26,7 +26,7 @@
 </p>
 
 <p class="movieUser">
-  <strong>Last updated by:</strong>
+  <strong>Movie added by:</strong>
   <em><%= @movie.user.email %></em>
 </p>
 
@@ -59,9 +59,10 @@
 </table>
 
 <%= link_to 'Add a Review', new_movie_review_path(@movie) %> |
-<%= link_to 'Edit Movie', edit_movie_path(@movie) %> |
+
 
 <% if current_user.id == @movie.user_id %>
+<%= link_to 'Edit Movie', edit_movie_path(@movie) %> |
  <%= link_to 'Destroy', @movie, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
 </div>

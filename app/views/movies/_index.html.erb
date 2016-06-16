@@ -18,7 +18,7 @@
 
   <tbody>
     <% @movies.each do |movie| %>
-      <tr>
+      <tr id="movieDetails-<%=movie.id%>">
         <td><%= movie.title %></td>
         <td><%= movie.year %></td>
         <td><%= movie.synopsis %></td>
@@ -27,7 +27,9 @@
           <% else %>
         <td><%= number_with_precision(movie.rating, precision: 1) %></td>
         <% end %>
-        <td> <%= movie.reviews.size %> review(s)</td>
+        <td> <%= movie.reviews.size %> review(s) <br/>
+          <% if movie.reviews.size > 0 %>
+          <a id='showReviews-<%=movie.id%>' href='/movies/<%= movie.id%>/reviews'>Show Reviews</a> <% end %> </td>
         <td><%= link_to 'Show', movie %></td>
         <% if current_user.id == movie.user_id %>
         <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
@@ -43,3 +45,26 @@
 <br>
 
 <%= link_to 'New Movie', new_movie_path %>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+  $('a').on("click", function(e){
+    $.ajax({
+      method: "GET",
+      url: this.href
+    }).success(function(response){
+    $.each(response, function(index,review){
+        var html = "<tr style='color:red;'>";
+        html += "<td colspan='2'><strong>Review:</strong></td><td><em> " + review['title'] + "</em></td>"
+        html += "<td><strong>Reviewer:</strong></td><td colspan='2'><em>" + review['user']['email'] + "</em></td></tr>"
+        html += "<tr style='color:red;'><td colspan='2'><strong>Rating:</strong></td><td>" + review['rating'] + "</td></tr>"
+
+        $("a#showReviews-"+review['movie']['id']).hide();
+        $("#movieDetails-"+review['movie']['id']).after(html);
+
+    });
+    });
+    e.preventDefault();
+  });
+});
+</script>

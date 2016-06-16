@@ -21,6 +21,9 @@ class ReviewsController < ApplicationController
   end
 
   def index
+    @movie = Movie.find(params[:movie_id])
+    @reviews = @movie.reviews
+    render json:  @reviews, each_serializer: ReviewSerializer
   end
 
   def edit
@@ -53,7 +56,7 @@ class ReviewsController < ApplicationController
 
   def user_reviews
     @reviews =  current_user.reviews
-    render :index
+    render :user_reviews
   end
 
 
