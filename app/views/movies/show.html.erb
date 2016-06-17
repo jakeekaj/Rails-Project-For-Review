@@ -134,9 +134,9 @@ $(document).ready(function(){
       url: url,
       data: data,
       success: function(response){
-        var html = "<li>"
+        var html = "<li>&quot;"
         html += response['text']
-        html += "</li>"
+        html += "&quot;</li>"
         $('div#quotesList ul').append(html)
         $('#quote_text').val("")
       }

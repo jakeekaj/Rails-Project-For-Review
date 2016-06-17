@@ -42,3 +42,7 @@
 ### DRY Rails app
 
   1. Makes use of several partials to render various forms.
+
+### Expansion features using jQuery, AJAX, and JSON
+
+  1. Create and load resources without page refresh by using jQuery behind the scenes and getting the data obtained in JSON format, then converting it back to a JavaScript Object to be rendered to the view. 

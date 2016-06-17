@@ -32,6 +32,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
  gem 'bootstrap-sass'
  gem 'arel'
  gem 'active_model_serializers'
+ gem 'seed_dump'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
