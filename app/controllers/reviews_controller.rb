@@ -1,14 +1,12 @@
 class ReviewsController < ApplicationController
-  before_action :set_movie_and_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_movie, except: [:user_reviews]
+  before_action :set_review, only: [:show, :edit, :update, :destroy]
 
   def new
-    @movie = Movie.find(params[:movie_id])
     @review = @movie.reviews.build
   end
 
-
   def create
-    @movie = Movie.find(params[:movie_id])
     @review = @movie.reviews.create(review_params)
     @movie.update_rating(@review.rating)
 
@@ -21,13 +19,11 @@ class ReviewsController < ApplicationController
   end
 
   def index
-    @movie = Movie.find(params[:movie_id])
     @reviews = @movie.reviews
     render json:  @reviews, each_serializer: ReviewSerializer
   end
 
-  def edit
-  end
+  def edit;end
 
   def show
     respond_to do |format|
@@ -40,6 +36,7 @@ class ReviewsController < ApplicationController
     @review.update(review_params)
     @movie.update_rating(@review.rating)
     @movie.save
+
     if @review.save
       redirect_to movie_path(@movie), notice: 'Review was successfully edited.'
     else
@@ -51,6 +48,7 @@ class ReviewsController < ApplicationController
     @review.destroy
     @movie.update_rating(0)
     @movie.save
+
     redirect_to @movie, notice: 'Review was successfully deleted.'
   end
 
@@ -59,19 +57,17 @@ class ReviewsController < ApplicationController
     render :user_reviews
   end
 
-
-
   private
 
-  def set_movie_and_review
+  def set_movie
     @movie = Movie.find(params[:movie_id])
+  end
+
+  def set_review
     @review = @movie.reviews.find_by(id: params[:id])
   end
 
   def review_params
-    params.require(:review).permit(:title, :content,:rating, :user_id)
+    params.require(:review).permit(:title, :content, :rating, :user_id)
   end
-
-
-
 end

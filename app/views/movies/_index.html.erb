@@ -1,49 +1,57 @@
 <p id="notice"><%= notice %></p>
 
 <h1>List of Movies in the DB</h1>
-<%= link_to "Sort by rating (unrated not included)", movies_rating_url %> | <%= link_to "Show all unrated films", movies_unrated_url %>
-| <%= link_to "Sort by Year (latest first)", movies_latest_url %>
+<%= link_to "Sort by rating (unrated not included)", sort_movies_path(rating: true) %> | <%= link_to "Show all unrated films", sort_movies_path(unrated: true) %>
+| <%= link_to "Sort by Year (latest first)", sort_movies_path(year: true) %>
 <% if @movies.count > 0%>
-<%# Create a table for movie iteration %>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Year</th>
-      <th>Synopsis</th>
-      <th>Rating</th>
-      <th>No. of Reviews</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr id="movieDetails-<%=movie.id%>">
-        <td><%= movie.title %></td>
-        <td><%= movie.year %></td>
-        <td><%= movie.synopsis %></td>
-        <% if movie.rating.nil?  %>
-        <td><em>Movie not yet reviewed</em></td>
-          <% else %>
-        <td><%= number_with_precision(movie.rating, precision: 1) %></td>
-        <% end %>
-        <td> <%= movie.reviews.size %> review(s) <br/>
-          <% if movie.reviews.size > 0 %>
-          <%# Create hyperlink to show movies through ajax call %>
-          <a id='showReviews-<%=movie.id%>' class="showReviews" href='/movies/<%= movie.id%>/reviews'>Show Reviews</a> <% end %> </td>
-        <td><%= link_to 'Show', movie %></td>
-        <% if current_user.id == movie.user_id %>
-        <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-        <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+  <%# Create a table for movie iteration %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Synopsis</th>
+        <th>Rating</th>
+        <th>No. of Reviews</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr id="movieDetails-<%=movie.id%>">
+          <td><%= movie.title %></td>
+          <td><%= movie.year %></td>
+          <td><%= movie.synopsis %></td>
+
+          <% if movie.rating.nil?  %>
+            <td><em>Movie not yet reviewed</em></td>
+          <% else %>
+            <td><%= number_with_precision(movie.rating, precision: 1) %></td>
+          <% end %>
+
+          <td>
+            <%= movie.reviews.size %> review(s)
+            <br/>
+            <% if movie.reviews.size > 0 %>
+              <%# Create hyperlink to show movies through ajax call %>
+              <a id='showReviews-<%=movie.id%>' class="showReviews" href='/movies/<%= movie.id%>/reviews'>Show Reviews</a>
+            <% end %>
+          </td>
+
+          <td><%= link_to 'Show', movie %></td>
+          <% if current_user.id == movie.user_id %>
+            <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
+            <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-<h3>There are no movies at this time.</h3>
+  <h3>There are no movies at this time.</h3>
 <% end %>
+
 <br>
 
 <%= link_to 'New Movie', new_movie_path %>
