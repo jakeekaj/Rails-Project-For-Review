@@ -54,7 +54,7 @@
     <% @movie.reviews.each do |review| %>
       <tr id="movieReviews-<%=review.id%>">
         <td><strong><%= review.title%></strong></td>
-        <td><%= review.user.email %></td>
+        <td><%= review.reviewer.email %></td>
         <td><%= number_with_precision(review.rating, precision: 1) %></td>
         <td><a id='showReviews-<%=review.id%>' class="showReviews" href='/movies/<%= @movie.id%>/reviews/<%=review.id%>.json'>Show Content</a> </td>
         <% if current_user.id == review.user_id %>
