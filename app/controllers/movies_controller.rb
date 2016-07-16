@@ -4,26 +4,20 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-
     @movies = Movie.all
-   respond_to do |format|
+
+    respond_to do |format|
       format.html { render :index }
       format.json { render json: @movies, each_serializer: MovieSerializer }
     end
   end
+
   # sort actions
-  def rating
-    @movies = Movie.rated.by_rating
+  def sort
+    return @movies = Movie.sorted_by_rating  if params[:rating]   == 'true'
+    return @movies = Movie.sorted_by_year    if params[:year]     == 'true'
+    return @movies = Movie.unrated           if params[:unrated]  == 'true'
   end
-
-  def unrated
-    @movies = Movie.unrated
-  end
-
-  def latest
-    @movies = Movie.latest
-  end
-
 
   # GET /movies/1
   # GET /movies/1.json
@@ -33,18 +27,15 @@ class MoviesController < ApplicationController
       format.html { render :show }
       format.json { render json: @movie, serializer: MovieSerializer }
     end
-
   end
 
   # GET /movies/new
   def new
     @movie = Movie.new
-
   end
 
   # GET /movies/1/edit
-  def edit
-  end
+  def edit;end
 
   # POST /movies
   # POST /movies.json
@@ -79,16 +70,12 @@ class MoviesController < ApplicationController
   # DELETE /movies/1
   # DELETE /movies/1.json
   def destroy
-    @movie.delete_all_reviews
     @movie.destroy
     respond_to do |format|
       format.html { redirect_to movies_url, notice: 'Movie was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
-
-
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
