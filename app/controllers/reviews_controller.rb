@@ -8,10 +8,8 @@ class ReviewsController < ApplicationController
 
   def create
     @review = @movie.reviews.create(review_params)
-    @movie.update_rating(@review.rating)
 
     if @review.save
-      @movie.save
       redirect_to movie_path(@movie), notice: 'Review was successfully added.'
     else
       render :new, notice: 'Review was not added.'
@@ -34,8 +32,6 @@ class ReviewsController < ApplicationController
 
   def update
     @review.update(review_params)
-    @movie.update_rating(@review.rating)
-    @movie.save
 
     if @review.save
       redirect_to movie_path(@movie), notice: 'Review was successfully edited.'
@@ -46,8 +42,6 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-    @movie.update_rating(0)
-    @movie.save
 
     redirect_to @movie, notice: 'Review was successfully deleted.'
   end
